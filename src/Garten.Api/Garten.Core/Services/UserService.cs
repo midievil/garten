@@ -73,7 +73,7 @@ namespace Garten.Core.Services
                 .List()
                 .ProjectTo<UserViewDto>(_mapper.ConfigurationProvider);
 
-            if (sort.SortColumn == "LastName")
+            if (sort.SortColumn == nameof(UserViewDto.LastName))
                 result = sort.SortDesc
                     ? result
                         .OrderByDescending(p => p.LastName)
@@ -92,6 +92,11 @@ namespace Garten.Core.Services
                     .Take(sort.PageSize);
 
             return await result.ToListAsync();
+        }
+
+        public async Task<UserViewDto> GetUserByIdAsync(Guid id)
+        {
+            return _mapper.Map<UserViewDto>(await _userRepository.GetByIdAsync(id));
         }
     }
 }

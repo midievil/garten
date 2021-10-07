@@ -23,6 +23,12 @@ namespace Garten.Api.Controllers.Admin
             return await ProcessResultAsync(() => _userService.ListUsersAsync(sort));
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserViewDto>> GetById([FromRoute] Guid id)
+        {
+            return await ProcessResultAsync(() => _userService.GetUserByIdAsync(id));
+        }
+
         [HttpPost]
         public async Task<ActionResult<UserViewDto>> AddUser([FromBody] UserEditDto request)
         {
