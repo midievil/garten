@@ -54,5 +54,37 @@ namespace Zing.Auth.Api.Controllers.Base
                 return StatusCode(500, new { e.Message });
             }
         }
+
+        /// <summary>
+        /// Выполнить указанный метод и обернуть результат выполнения в ответ для API
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="func"></param>
+        /// <returns></returns>
+        protected async Task<ActionResult> ProcessResultAsync(Func<Task> func)
+        {
+            try
+            {
+                await func();
+                return NoContent();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized();
+            }
+            catch (FormatException e)
+            {
+                return BadRequest(new { Error = e.Message });
+            }
+            catch (KeyNotFoundException e)
+            {
+                return NotFound();
+            }
+            catch (Exception e)
+            {
+                //_logger.LogError(e, $"Error in controller. \nUserId: {CurrentUserId}\nRole: {CurrentRole}\nUrl: {Request.QueryString} \nCorrelationId: {correlationId}");
+                return StatusCode(500, new { e.Message });
+            }
+        }
     }
 }

@@ -10,7 +10,7 @@ namespace Garten.Core.Services.Interfaces
     {
         Task<UserViewDto> CreateUserAsync(UserEditDto user, Guid adminId);
         Task<UserViewDto> EditUserAsync(Guid id, UserEditDto user, Guid adminId);
-        Task SetUserPasswordAsync(Guid id, SetPasswordRequestDto request);
+        Task SetUserPasswordAsync(Guid userId, SetPasswordRequestDto request);
         Task<IEnumerable<UserViewDto>> ListUsersAsync(SortParamsDto sort);
     }
 }

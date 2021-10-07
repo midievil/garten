@@ -56,9 +56,9 @@ namespace Garten.Core.Services
             return _mapper.Map<UserViewDto>(await _userRepository.Update(existingUser));
         }
 
-        public async Task SetUserPasswordAsync(Guid id, SetPasswordRequestDto request)
+        public async Task SetUserPasswordAsync(Guid userId, SetPasswordRequestDto request)
         {
-            var existingUser = await _userRepository.GetByIdAsync(id);
+            var existingUser = await _userRepository.GetByIdAsync(userId);
             if (existingUser == null)
                 throw new KeyNotFoundException();
 
